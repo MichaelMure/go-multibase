@@ -7,7 +7,7 @@ import (
 )
 
 var base256emojiTable = [256]rune{
-	// Curated list, this is just a list of things that *somwhat* are related to our comunity
+	// Curated list, this is just a list of things that *somewhat* are related to our community
 	'🚀', '🪐', '☄', '🛰', '🌌', // Space
 	'🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘', // Moon
 	'🌍', '🌏', '🌎', // Our Home, for now (earth)
@@ -15,7 +15,7 @@ var base256emojiTable = [256]rune{
 	'☀',                // Our Garden, for now (sol)
 	'💻', '🖥', '💾', '💿', // Computer
 	// The rest is completed from https://home.unicode.org/emoji/emoji-frequency/ at the time of creation (december 2021) (the data is from 2019), most used first until we reach 256.
-	// We exclude modifier based emojies (such as flags) as they are bigger than one single codepoint.
+	// We exclude modifier-based emojies (such as flags) as they are bigger than one single codepoint.
 	// Some other emojies were removed adhoc for various reasons.
 	'😂', '❤', '😍', '🤣', '😊', '🙏', '💕', '😭', '😘', '👍',
 	'😅', '👏', '😁', '🔥', '🥰', '💔', '💖', '💙', '😢', '🤔',

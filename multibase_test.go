@@ -47,14 +47,33 @@ var encodedSamples = map[Encoding]string{
 	Base256Emoji:      "🚀💛✋💃✋😻😈🥺🤤🍀🌟💐✋😅✋💦✋🥺🏃😈😴🌟😻😝👏👏👏",
 }
 
-func testEncode(t *testing.T, encoding Encoding, bytes []byte, expected string) {
-	actual, err := Encode(encoding, bytes)
+func testEncode(t *testing.T, encoding Encoding, clearBytes []byte, expected string) {
+	// full copy encoding
+	actual, err := Encode(encoding, clearBytes)
 	if err != nil {
-		t.Error(err)
-		return
+		t.Fatal(err)
 	}
 	if actual != expected {
 		t.Errorf("encoding failed for %c (%d / %s), expected: %s, got: %s", encoding, encoding, EncodingToStr[encoding], expected, actual)
+	}
+	// writer encoding
+	buf := bytes.NewBuffer(nil)
+	writer := MustNewEncoder(encoding).Writer(buf)
+	_, err = writer.Write(clearBytes)
+	if err != nil && err.Error() == "unsupported encoding as writer" {
+		t.Logf("skipping unsupported writer encoding for %c (%d / %s)", encoding, encoding, EncodingToStr[encoding])
+		return
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	err = writer.Close()
+	if err != nil {
+		t.Fatal(err)
+	}
+	actual = buf.String()
+	if actual != expected {
+		t.Errorf("writer encoding failed for %c (%d / %s), expected: %s, got: %s", encoding, encoding, EncodingToStr[encoding], expected, actual)
 	}
 }
 
